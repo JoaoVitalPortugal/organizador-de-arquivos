@@ -4,8 +4,10 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"io/fs"
 	"log/slog"
 	"os"
+	"path"
 	"path/filepath"
 	"strings"
 	"time"
@@ -63,7 +65,7 @@ func main() {
 		logger.ErrorContext(ctx, "não foi possível criar um 'watcher' para o path", "target-dir", targetDir)
 	}
 	defer watcher.Close()
-	
+
 	err = watcher.Add(targetDir)
 	if err != nil {
 		logger.ErrorContext(ctx, "Não foi possível escutar os eventos da pasta", "target-dir", targetDir)
@@ -76,8 +78,27 @@ func main() {
 		"audios-dir", defaultAudioDir,
 		"videos-dir", defaultVideoDir,
 		"debug", debug)
-	run_watch(ctx, logger, watcher)
+	
+	// run_watch(ctx, logger, watcher)
 }
+
+// func moveFileToPath(baseTargetPath, targetFolder, currentFilePath string) error {
+// 	absFilePath, err := filepath.Abs(currentFilePath)
+// 	if err != nil {
+// 		return fmt.Errorf("Não foi possível resolver o path absoluto do arquivo [%s] :%w", currentFilePath, err)
+// 	}
+
+// 	relativeTargetPath := filepath.Join(baseTargetPath, targetFolder)
+// 	absTargetFolder, err := filepath.Abs(relativeTargetPath)
+// 	if err != nil {
+// 		return fmt.Errorf("Não foi possível resolver o path absoluto da pasta [%s] :%w", relativeTargetPath, err)
+// 	}
+
+// 	fs.FileInfoToDirEntry()
+	
+// 	time.Sleep(2 * time.Second)
+// 	os.Rename(fileName, destPath)
+// }
 
 func run_watch(ctx context.Context, logger *slog.Logger, watcher *fsnotify.Watcher) {
 	for {

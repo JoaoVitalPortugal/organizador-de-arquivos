@@ -24,7 +24,10 @@ O programa identifica o arquivo, espera o download terminar (pra não mover arqu
 
    go get [github.com/fsnotify/fsnotify](https://github.com/fsnotify/fsnotify)
    go get [github.com/gen2brain/beeep](https://github.com/gen2brain/beeep)
-
+   ```
 2. **Rode o programa**
    ```bash
    go run main.go
+
+   go run ./ --help # para ver os argumentos opcionais
+   ```
